@@ -1,150 +1,299 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>NexusSphere Cyber Incident Challenge</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
+<title>NexusSphere Cyber Incident Challenge</title>
 
-        body{
-            font-family: Arial, sans-serif;
-            background:#0f172a;
-            color:white;
-            text-align:center;
-            padding:20px;
-        }
+<style>
 
-        .card{
-            background:#1e293b;
-            padding:20px;
-            margin:20px auto;
-            border-radius:10px;
-            max-width:700px;
-        }
+body{
+    font-family: Arial, sans-serif;
+    background:#0f172a;
+    color:white;
+    margin:0;
+    padding:20px;
+}
 
-        button{
-            background:#2563eb;
-            color:white;
-            border:none;
-            padding:12px 20px;
-            border-radius:5px;
-            cursor:pointer;
-            font-size:16px;
-        }
+.container{
+    max-width:900px;
+    margin:auto;
+}
 
-        button:hover{
-            background:#1d4ed8;
-        }
+h1,h2,h3{
+    text-align:center;
+}
 
-    </style>
+.card{
+    background:#1e293b;
+    padding:25px;
+    margin-top:20px;
+    border-radius:12px;
+    box-shadow:0 0 15px rgba(0,0,0,0.3);
+}
 
+.avatar{
+    font-size:80px;
+    text-align:center;
+}
+
+button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    font-size:16px;
+    border-radius:6px;
+    cursor:pointer;
+    margin-top:15px;
+}
+
+button:hover{
+    background:#1d4ed8;
+}
+
+.question{
+    background:#334155;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+}
+
+.progress{
+    text-align:center;
+    font-size:18px;
+    margin-top:10px;
+    color:#93c5fd;
+}
+
+textarea{
+    width:100%;
+    height:120px;
+    padding:10px;
+    border-radius:6px;
+    border:none;
+    margin-top:10px;
+    font-size:14px;
+}
+
+.logo{
+    text-align:center;
+    font-size:60px;
+}
+
+</style>
 </head>
 
 <body>
 
-<h1>NexusSphere Technologies</h1>
+<div class="container">
+
+<div class="logo">🛡️</div>
+
+<h1>NexusSphere Technologies Ltd</h1>
 
 <h2>Cyber Incident Challenge</h2>
 
+<div class="card">
+
 <p>
-You have been appointed to investigate a suspected cyber attack.
-Collect evidence and identify what happened.
+NexusSphere Technologies has experienced a suspected cyber attack.
+Your incident response team must interview key stakeholders,
+gather evidence and determine what happened.
+</p>
+
+<p>
+Document important findings as you progress through the investigation.
 </p>
 
 <button onclick="startInvestigation()">
 Start Investigation
 </button>
 
-<div id="incident"></div>
+</div>
+
+<div id="content"></div>
+
+</div>
 
 <script>
 
-const evidence = [
+const stakeholders = [
 
 {
-title:"Helpdesk Manager",
-text:"More than 50 employees have reported account lockouts this morning."
+avatar:"👩‍💼",
+name:"Emma Carter",
+role:"Helpdesk Manager",
+
+statement:
+"Over 50 employees have reported account lockouts this morning. Several users also received password reset notifications that they did not request.",
+
+questions:[
+"When did the reports begin?",
+"Which departments are affected?",
+"What type of account issues are users reporting?"
+]
 },
 
 {
-title:"SOC Analyst",
-text:"Large outbound traffic was detected at 03:12 AM."
+avatar:"👨‍💻",
+name:"Daniel Hughes",
+role:"SOC Analyst",
+
+statement:
+"Our monitoring systems detected large outbound data transfers to an unknown IP address at 03:12 AM. The activity originated from an internal workstation.",
+
+questions:[
+"What data may have left the network?",
+"What systems generated the alerts?",
+"Should the incident be escalated?"
+]
 },
 
 {
-title:"HR Manager",
-text:"An employee clicked an email attachment claiming to be from IT Support."
+avatar:"💼",
+name:"Sophie Mitchell",
+role:"Chief Financial Officer",
+
+statement:
+"A payment of £48,000 was approved outside normal working hours. Nobody in Finance recognises the transaction.",
+
+questions:[
+"Who approved the payment?",
+"Was multi-factor authentication used?",
+"Could financial systems be compromised?"
+]
 },
 
 {
-title:"Finance Director",
-text:"A payment of £48,000 was approved overnight."
+avatar:"📋",
+name:"James Walker",
+role:"HR Manager",
+
+statement:
+"One employee admitted opening an email attachment that appeared to come from IT Support. Several other employees received the same message.",
+
+questions:[
+"What did the email contain?",
+"Who received the message?",
+"Could credentials have been stolen?"
+]
 },
 
 {
-title:"CEO",
-text:"Customers are already asking questions on social media."
+avatar:"🏢",
+name:"Olivia Bennett",
+role:"Chief Executive Officer",
+
+statement:
+"Customers are already asking questions on social media. The Board expects an incident briefing within the next 15 minutes.",
+
+questions:[
+"What is the business impact?",
+"What should be communicated externally?",
+"What actions should be taken immediately?"
+]
 }
 
 ];
 
-let current = 0;
+let currentStakeholder = 0;
 
 function startInvestigation(){
-
-showEvidence();
-
+    displayStakeholder();
 }
 
-function showEvidence(){
+function displayStakeholder(){
 
-if(current >= evidence.length){
+    if(currentStakeholder >= stakeholders.length){
 
-document.getElementById("incident").innerHTML = `
-<div class='card'>
-<h2>Investigation Complete</h2>
+        document.getElementById("content").innerHTML = `
 
-<p>
-Your team should now determine:
-</p>
+        <div class="card">
 
-<ul style='text-align:left'>
-<li>How did the attack happen?</li>
-<li>What evidence was most important?</li>
-<li>What should the company do next?</li>
-</ul>
+        <h2>Investigation Complete</h2>
 
-</div>
-`;
+        <h3>Final Team Discussion</h3>
 
-return;
+        <p>Using the evidence collected, answer the following:</p>
+
+        <div class="question">
+        What was the likely root cause of the attack?
+        </div>
+
+        <div class="question">
+        How did the attacker gain access?
+        </div>
+
+        <div class="question">
+        What evidence supports your conclusion?
+        </div>
+
+        <div class="question">
+        What was the business impact?
+        </div>
+
+        <div class="question">
+        What recommendations would you make?
+        </div>
+
+        <textarea placeholder="Record your final investigation findings here..."></textarea>
+
+        </div>
+        `;
+
+        return;
+    }
+
+    const person = stakeholders[currentStakeholder];
+
+    let html = `
+    
+    <div class="progress">
+    Stakeholder ${currentStakeholder + 1} of ${stakeholders.length}
+    </div>
+
+    <div class="card">
+
+    <div class="avatar">
+    ${person.avatar}
+    </div>
+
+    <h2>${person.name}</h2>
+
+    <h3>${person.role}</h3>
+
+    <p>${person.statement}</p>
+
+    <h3>Questions for Your Team</h3>
+    `;
+
+    person.questions.forEach(question => {
+        html += `<div class="question">${question}</div>`;
+    });
+
+    html += `
+
+    <h3>Investigation Notes</h3>
+
+    <textarea
+    placeholder="Record important evidence and observations here..."
+    ></textarea>
+
+    <button onclick="nextStakeholder()">
+    Interview Next Stakeholder
+    </button>
+
+    </div>
+    `;
+
+    document.getElementById("content").innerHTML = html;
 }
 
-let item = evidence[current];
-
-document.getElementById("incident").innerHTML = `
-
-<div class='card'>
-
-<h2>${item.title}</h2>
-
-<p>${item.text}</p>
-
-<button onclick="nextEvidence()">
-Next Evidence
-</button>
-
-</div>
-`;
-
-}
-
-function nextEvidence(){
-
-current++;
-
-showEvidence();
-
+function nextStakeholder(){
+    currentStakeholder++;
+    displayStakeholder();
 }
 
 </script>
