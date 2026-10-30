@@ -159,6 +159,44 @@ body.alarm .vignette{animation:alarm 2.4s ease-in-out infinite}
 .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .saved{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
 
+/* Team name, verdict and result */
+.field{display:grid;gap:6px}
+.field input{width:100%;padding:13px 14px;border-radius:4px;border:1px solid var(--line);background:rgba(3,10,22,.8);color:var(--text);font-family:var(--f-display);font-size:18px;font-weight:600}
+.err{font-size:13px;color:var(--alert)}
+.vq{display:grid;gap:8px;padding:14px;border:1px solid var(--line);border-radius:8px;background:rgba(6,22,46,.5)}
+.vq p{margin:0;font-weight:600;font-size:15px;line-height:1.45}
+.vq .num{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--amber)}
+.opt{text-align:left;border:1px solid var(--line);background:rgba(3,10,22,.6);border-radius:6px;padding:11px 12px;font-size:14px;line-height:1.4;display:grid;grid-template-columns:22px 1fr;gap:6px}
+.opt b{font-family:var(--f-mono);color:var(--holo);font-weight:500}
+.opt.right{border-color:var(--ok);background:rgba(62,229,154,.12)}
+.opt.wrong{border-color:var(--alert);background:rgba(255,77,94,.1);animation:shake .4s}
+.opt:disabled{cursor:default}
+.vq.solved{border-color:rgba(62,229,154,.5)}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.penalty{font-family:var(--f-mono);font-size:12px;color:var(--alert)}
+.result{text-align:center;display:grid;gap:6px;padding:18px 12px;border:1px solid var(--ok);border-radius:10px;background:radial-gradient(ellipse at 50% 0%,rgba(62,229,154,.18),transparent 70%)}
+.result .team{font-family:var(--f-display);font-size:22px;font-weight:700}
+.result .time{font-family:var(--f-display);font-size:clamp(56px,18vw,84px);font-weight:700;line-height:1;color:var(--ok);font-variant-numeric:tabular-nums;text-shadow:0 0 30px rgba(62,229,154,.45)}
+.result .meta{font-family:var(--f-mono);font-size:12px;color:var(--muted);line-height:1.6}
+.result .meta b{color:var(--text);font-weight:500}
+.restart{border:0;background:none;color:var(--muted);text-decoration:underline;font-size:13px;justify-self:center;padding:6px}
+.confirm{display:grid;gap:10px;padding:12px;border:1px solid var(--alert);border-radius:8px;font-size:14px}
+
+/* Ask-the-stakeholder questions */
+.hint{margin:-8px 0 0;font-size:13px;color:var(--muted)}
+.asks{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.ask{width:100%;text-align:left;display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center;padding:12px;border:1px solid var(--holo-2);border-radius:6px;background:rgba(47,139,230,.12);font-size:14.5px;line-height:1.45}
+.ask::before{content:"Q";font-family:var(--f-mono);color:var(--holo);font-size:12px}
+.ask .go{font-family:var(--f-display);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--holo)}
+.ask[aria-expanded="true"]{border-color:var(--line);background:rgba(6,22,46,.6);cursor:default}
+.ask[aria-expanded="true"] .go{color:var(--ok)}
+.answer{margin:6px 0 0 14px;padding:10px 12px;border-left:2px solid var(--amber);background:rgba(251,191,36,.07);font-size:14.5px;line-height:1.55;border-radius:0 6px 6px 0}
+.answer b{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);font-weight:500;margin-bottom:3px}
+.clues{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--amber)}
+.notes{display:grid;gap:6px;margin:6px 0 0;padding:0;list-style:none;font-size:13px;line-height:1.45;color:var(--muted)}
+.notes li{padding-left:10px;border-left:2px solid var(--line)}
+.notes li b{color:var(--text);font-weight:500}
+
 .toast{position:fixed;left:50%;top:22%;transform:translateX(-50%);z-index:30;text-align:center;font-family:var(--f-display);pointer-events:none;animation:toast 2.6s ease forwards;width:max-content;max-width:90vw}
 .toast b{display:block;font-size:clamp(26px,7.5vw,42px);font-weight:700;color:var(--amber);text-shadow:0 0 24px rgba(251,191,36,.6);text-transform:uppercase}
 .toast span{font-size:13px;letter-spacing:.14em;text-transform:uppercase}
@@ -198,8 +236,13 @@ body.alarm .vignette{animation:alarm 2.4s ease-in-out infinite}
     <ul class="steps">
       <li><b>01</b>Scan the room. Follow the radar to each stakeholder.</li>
       <li><b>02</b>Tap a hologram to interview them and unlock evidence.</li>
-      <li><b>03</b>Interview all five, then write your incident report.</li>
+      <li><b>03</b>Interview all five, then solve the case. The clock is running and wrong answers cost 30 seconds.</li>
     </ul>
+    <div class="field">
+      <label class="eyebrow" for="teamName">Team name</label>
+      <input id="teamName" type="text" maxlength="30" autocomplete="off" placeholder="e.g. Red Team">
+      <span class="err" id="teamErr" hidden>Enter a team name so your time can go on the rank board.</span>
+    </div>
     <div class="cta">
       <button class="btn" id="startAR" type="button">Start Investigation</button>
       <button class="btn ghost" id="startVR" type="button">No camera? Use the virtual incident room</button>
