@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NexusSphere Cyber Incident Challenge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            background:#0f172a;
+            color:white;
+            text-align:center;
+            padding:20px;
+        }
+
+        .card{
+            background:#1e293b;
+            padding:20px;
+            margin:20px auto;
+            border-radius:10px;
+            max-width:700px;
+        }
+
+        button{
+            background:#2563eb;
+            color:white;
+            border:none;
+            padding:12px 20px;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:16px;
+        }
+
+        button:hover{
+            background:#1d4ed8;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>NexusSphere Technologies</h1>
+
+<h2>Cyber Incident Challenge</h2>
+
+<p>
+You have been appointed to investigate a suspected cyber attack.
+Collect evidence and identify what happened.
+</p>
+
+<button onclick="startInvestigation()">
+Start Investigation
+</button>
+
+<div id="incident"></div>
+
+<script>
+
+const evidence = [
+
+{
+title:"Helpdesk Manager",
+text:"More than 50 employees have reported account lockouts this morning."
+},
+
+{
+title:"SOC Analyst",
+text:"Large outbound traffic was detected at 03:12 AM."
+},
+
+{
+title:"HR Manager",
+text:"An employee clicked an email attachment claiming to be from IT Support."
+},
+
+{
+title:"Finance Director",
+text:"A payment of £48,000 was approved overnight."
+},
+
+{
+title:"CEO",
+text:"Customers are already asking questions on social media."
+}
+
+];
+
+let current = 0;
+
+function startInvestigation(){
+
+showEvidence();
+
+}
+
+function showEvidence(){
+
+if(current >= evidence.length){
+
+document.getElementById("incident").innerHTML = `
+<div class='card'>
+<h2>Investigation Complete</h2>
+
+<p>
+Your team should now determine:
+</p>
+
+<ul style='text-align:left'>
+<li>How did the attack happen?</li>
+<li>What evidence was most important?</li>
+<li>What should the company do next?</li>
+</ul>
+
+</div>
+`;
+
+return;
+}
+
+let item = evidence[current];
+
+document.getElementById("incident").innerHTML = `
+
+<div class='card'>
+
+<h2>${item.title}</h2>
+
+<p>${item.text}</p>
+
+<button onclick="nextEvidence()">
+Next Evidence
+</button>
+
+</div>
+`;
+
+}
+
+function nextEvidence(){
+
+current++;
+
+showEvidence();
+
+}
+
+</script>
+
+</body>
+</html>
