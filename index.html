@@ -21,10 +21,6 @@ body{
     margin:auto;
 }
 
-h1,h2,h3{
-    text-align:center;
-}
-
 .card{
     background:#1e293b;
     padding:25px;
@@ -43,14 +39,8 @@ button{
     color:white;
     border:none;
     padding:12px 20px;
-    font-size:16px;
     border-radius:6px;
     cursor:pointer;
-    margin-top:15px;
-}
-
-button:hover{
-    background:#1d4ed8;
 }
 
 .question{
@@ -62,24 +52,21 @@ button:hover{
 
 .progress{
     text-align:center;
-    font-size:18px;
-    margin-top:10px;
     color:#93c5fd;
+    margin-bottom:20px;
+}
+
+.logo{
+    text-align:center;
+    font-size:70px;
 }
 
 textarea{
     width:100%;
     height:120px;
-    padding:10px;
-    border-radius:6px;
-    border:none;
     margin-top:10px;
-    font-size:14px;
-}
-
-.logo{
-    text-align:center;
-    font-size:60px;
+    border-radius:6px;
+    padding:10px;
 }
 
 </style>
@@ -99,12 +86,7 @@ textarea{
 
 <p>
 NexusSphere Technologies has experienced a suspected cyber attack.
-Your incident response team must interview key stakeholders,
-gather evidence and determine what happened.
-</p>
-
-<p>
-Document important findings as you progress through the investigation.
+Your team has been appointed to investigate.
 </p>
 
 <button onclick="startInvestigation()">
@@ -117,186 +99,7 @@ Start Investigation
 
 </div>
 
-<script>
-
-const stakeholders = [
-
-{
-avatar:"👩‍💼",
-name:"Emma Carter",
-role:"Helpdesk Manager",
-
-statement:
-"Over 50 employees have reported account lockouts this morning. Several users also received password reset notifications that they did not request.",
-
-questions:[
-"When did the reports begin?",
-"Which departments are affected?",
-"What type of account issues are users reporting?"
-]
-},
-
-{
-avatar:"👨‍💻",
-name:"Daniel Hughes",
-role:"SOC Analyst",
-
-statement:
-"Our monitoring systems detected large outbound data transfers to an unknown IP address at 03:12 AM. The activity originated from an internal workstation.",
-
-questions:[
-"What data may have left the network?",
-"What systems generated the alerts?",
-"Should the incident be escalated?"
-]
-},
-
-{
-avatar:"💼",
-name:"Sophie Mitchell",
-role:"Chief Financial Officer",
-
-statement:
-"A payment of £48,000 was approved outside normal working hours. Nobody in Finance recognises the transaction.",
-
-questions:[
-"Who approved the payment?",
-"Was multi-factor authentication used?",
-"Could financial systems be compromised?"
-]
-},
-
-{
-avatar:"📋",
-name:"James Walker",
-role:"HR Manager",
-
-statement:
-"One employee admitted opening an email attachment that appeared to come from IT Support. Several other employees received the same message.",
-
-questions:[
-"What did the email contain?",
-"Who received the message?",
-"Could credentials have been stolen?"
-]
-},
-
-{
-avatar:"🏢",
-name:"Olivia Bennett",
-role:"Chief Executive Officer",
-
-statement:
-"Customers are already asking questions on social media. The Board expects an incident briefing within the next 15 minutes.",
-
-questions:[
-"What is the business impact?",
-"What should be communicated externally?",
-"What actions should be taken immediately?"
-]
-}
-
-];
-
-let currentStakeholder = 0;
-
-function startInvestigation(){
-    displayStakeholder();
-}
-
-function displayStakeholder(){
-
-    if(currentStakeholder >= stakeholders.length){
-
-        document.getElementById("content").innerHTML = `
-
-        <div class="card">
-
-        <h2>Investigation Complete</h2>
-
-        <h3>Final Team Discussion</h3>
-
-        <p>Using the evidence collected, answer the following:</p>
-
-        <div class="question">
-        What was the likely root cause of the attack?
-        </div>
-
-        <div class="question">
-        How did the attacker gain access?
-        </div>
-
-        <div class="question">
-        What evidence supports your conclusion?
-        </div>
-
-        <div class="question">
-        What was the business impact?
-        </div>
-
-        <div class="question">
-        What recommendations would you make?
-        </div>
-
-        <textarea placeholder="Record your final investigation findings here..."></textarea>
-
-        </div>
-        `;
-
-        return;
-    }
-
-    const person = stakeholders[currentStakeholder];
-
-    let html = `
-    
-    <div class="progress">
-    Stakeholder ${currentStakeholder + 1} of ${stakeholders.length}
-    </div>
-
-    <div class="card">
-
-    <div class="avatar">
-    ${person.avatar}
-    </div>
-
-    <h2>${person.name}</h2>
-
-    <h3>${person.role}</h3>
-
-    <p>${person.statement}</p>
-
-    <h3>Questions for Your Team</h3>
-    `;
-
-    person.questions.forEach(question => {
-        html += `<div class="question">${question}</div>`;
-    });
-
-    html += `
-
-    <h3>Investigation Notes</h3>
-
-    <textarea
-    placeholder="Record important evidence and observations here..."
-    ></textarea>
-
-    <button onclick="nextStakeholder()">
-    Interview Next Stakeholder
-    </button>
-
-    </div>
-    `;
-
-    document.getElementById("content").innerHTML = html;
-}
-
-function nextStakeholder(){
-    currentStakeholder++;
-    displayStakeholder();
-}
-
-</script>
+<script src="script.js"></script>
 
 </body>
 </html>
